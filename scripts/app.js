@@ -1,5 +1,6 @@
 //创建app应用模块
-var yike = angular.module("yike",[]);
+//调用控制器模块 在依赖中写上控制器名称Controller
+var yike = angular.module("yike",["Controller","ngRoute"]);
 // run方法在模块创建完成之后会直接执行
 yike.run(["$rootScope",function($rootScope){
 	//给头部的a标签绑定单击事件,点击可以实现侧边导航栏的显示和隐藏
@@ -35,7 +36,24 @@ yike.run(["$rootScope",function($rootScope){
 
 	}
 }]);
-
+//配置路由
+yike.config(["$locationProvider",function($locationProvider){
+	$locationProvider.hashPrefix("");
+}])
+yike.config(["$routeProvider",function($routeProvider){
+	$routeProvider.when("/",{
+		redirectTo:"/index"//跳转到index处理
+	}).when("/index",{
+			templateUrl:"./views/list.html",
+			controller:"indexCtrl"
+	}).when("/older",{
+			templateUrl:"./views/older.html",
+			controller:"olderCtrl"
+	}).when("/author",{
+			templateUrl:"./views/author.html",
+			controller:"authorCtrl"
+	})
+}])
 
 
 
